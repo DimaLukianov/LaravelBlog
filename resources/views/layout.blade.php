@@ -10,6 +10,7 @@
     <div class="container">
         {!! link_to_route('posts.index', 'Home') !!}
         <h1>Welcome to my blog</h1>
+        <hr>
 
         @yield('content')
     </div>

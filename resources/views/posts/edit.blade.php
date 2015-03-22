@@ -2,18 +2,15 @@
 
 @section('content')
 
-    <h2>Editing</h2>
+    <h3>Edit: {{ $post->title }}</h3>
 
 
     {!! Form::model($post, ['route' => ['posts.update', $post->id], 'method' => 'PATCH']) !!}
 
-        @include('posts._form')
-
-        <div class="form-group">
-            {!! Form::submit('Update post', ['class' => 'btn btn-success']) !!}
-        </div>
+        @include('posts._form', ['buttonSubmitText' => 'Edit post'])
 
     {!! Form::close() !!}
+
     {!! link_to_route('posts.show', 'Close', [$post->id], ['class' => 'btn btn-default']) !!}
 
 

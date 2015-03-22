@@ -17,4 +17,13 @@
 //get('post/{id}/edit', ['as' => 'post_edit_path', 'uses' => 'PostsController@edit']);
 //patch('post/{id}', 'PostsController@update');
 
-$router->resource('posts', 'PostsController');
+//get('comments/create', 'CommentsController@create');
+//post('comments', 'CommentsController@store');
+
+Route::resource('posts', 'PostsController');
+Route::resource('comments', 'CommentsController');
+
+Route::controllers([
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
+]);

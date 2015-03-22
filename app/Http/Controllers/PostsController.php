@@ -2,24 +2,21 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
 use App\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller {
 
-    /**
-     * @var Post
-     */
-    private $post;
 
-    public function __construct(Post $post){
+    public function __construct(){
 
-        $this->post = $post;
+       $this->middleware('auth', ['only' => 'create']);
     }
 
 	public function index()
 	{
-        $posts = $this->post->get();
+        $posts = Post::latest('updated_at')->get();
 
 		return view('posts.index', compact('posts'));
 	}
@@ -29,17 +26,18 @@ class PostsController extends Controller {
         return view('posts.create');
 	}
 
-	public function store(Requests\CreatePostRequest $request)
+    public function store(PostRequest $request)
 	{
-		$this->post->create($request->all());
+		$post = new Post($request->all());
+
+        Auth::user()->posts()->save($post);
 
         return redirect()->route('posts.index');
 	}
 
-	public function show($id)
+    public function show($id)
 	{
-		//$post = Post::find($id);
-        $post = $this->post->find($id);
+        $post = Post::find($id);
 
         return view('posts.show', compact('post'));
 	}
@@ -47,17 +45,18 @@ class PostsController extends Controller {
 
 	public function edit($id)
 	{
-        $post = $this->post->find($id);
+        $post = Post::find($id);
 
         return view('posts.edit', compact('post'));
 	}
 
-	public function update($id, Requests\CreatePostRequest $request)
+	public function update($id, PostRequest $request)
 	{
-        $post = $this->post->find($id);
+        $post = Post::find($id);
 
+        $post->update($request->all());
         //в класі Post треба додати fillable[]
-        $post->fill($request->input())->save();
+        //$post->fill($request->input())->save();
 //or
 //        $post->fill(['title' => $request->get('title'), 'body' => $request->get('body')])->save();
 //or

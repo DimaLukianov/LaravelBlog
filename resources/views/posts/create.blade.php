@@ -2,16 +2,11 @@
 
 @section('content')
 
-    <h2>New post</h2>
-
+    <h3>New post</h3>
 
     {!! Form::open(['route' => 'posts.store']) !!}
 
-        @include('posts._form')
-
-        <div class="form-group">
-            {!! Form::submit('Create post', ['class' => 'btn btn-success']) !!}
-        </div>
+        @include('posts._form', ['buttonSubmitText' => 'Create post'])
 
     {!! Form::close() !!}
 

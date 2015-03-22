@@ -14,7 +14,18 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class Post extends Eloquent{
 
     protected $fillable = [
-      'title', 'body'
+      'title', 'body', 'user_id'
     ];
 
+    public function user(){
+
+        return $this->belongsTo('App\User');
+
+    }
+
+    public function comments(){
+
+        return $this->hasMany('App\Comment');
+
+    }
 }

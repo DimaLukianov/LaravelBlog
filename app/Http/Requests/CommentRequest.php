@@ -2,7 +2,7 @@
 
 use App\Http\Requests\Request;
 
-class CreatePostRequest extends Request {
+class CommentRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -22,8 +22,7 @@ class CreatePostRequest extends Request {
 	public function rules()
 	{
 		return [
-			'title' => 'required',
-            'body' => 'required'
+            'body' => 'required',
 		];
 	}
 
