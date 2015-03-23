@@ -22,6 +22,9 @@
 
 Route::resource('posts', 'PostsController');
 Route::resource('comments', 'CommentsController');
+Route::resource('tags', 'TagsController');
+
+Route::get('/', 'PostsController@index');
 
 Route::controllers([
     'auth' => 'Auth\AuthController',

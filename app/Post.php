@@ -17,15 +17,36 @@ class Post extends Eloquent{
       'title', 'body', 'user_id'
     ];
 
-    public function user(){
+    public function user()
+    {
 
         return $this->belongsTo('App\User');
 
     }
 
-    public function comments(){
+    public function comments()
+    {
 
         return $this->hasMany('App\Comment');
 
     }
+
+    public function tags()
+    {
+
+        return $this->belongsToMany('App\Tag')->withTimestamps();
+
+    }
+
+    /**
+     *Get list of tag ids associated with the current post.
+     *
+     * @return array
+     */
+    public function getTagListAttribute()
+    {
+
+            return $this->tags->lists('id');
+    }
+
 }

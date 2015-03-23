@@ -11,6 +11,12 @@
     {!! Form::textarea('body', null, ['class' => 'form-control']) !!}
 </div>
 
+<div class="form-group {{ $errors->has('body') ? 'has-error' : '' }}">
+    {!! Form::label('tag_list', 'Tags:') !!}
+    {!! $errors->first('tag_list',  '<span class="help-block">:message</span>') !!}
+    {!! Form::select('tag_list[]', $tags, null, ['class' => 'form-control', 'multiple']) !!}
+</div>
+
 <div class="form-group">
     {!! Form::submit($buttonSubmitText, ['class' => 'btn btn-success']) !!}
 </div>

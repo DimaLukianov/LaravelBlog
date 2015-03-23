@@ -8,25 +8,54 @@ use App\Http\Requests\CommentRequest;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CommentsController extends Controller {
 
 
-	public function store(CommentRequest $request)
+    /**
+     * @param CommentRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function store(CommentRequest $request)
 	{
-        $comment = new Comment($request->all());
+        Auth::user()->comments()->create($request->all());
 
-        Auth::user()->comments()->save($comment);
+        Session::flash('success_message', 'Your comment has been added!');
 
         return redirect('posts/'.$request->get('post_id'));
 	}
 
 
-	public function destroy($id)
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function destroy($id)
 	{
-		Comment::find($id)->delete();
+        $post_id = $this->deleteComment($id);
 
-        return redirect()->route('posts.index');
+        return redirect('posts/'.$post_id);
 	}
+
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function deleteComment($id)
+    {
+        $comment = Comment::find($id);
+
+        $post_id = $comment->post_id;
+
+        if ($comment->delete()) {
+
+            Session::flash('success_message', 'Your comment has been deleted!');
+            return $post_id;
+
+        }
+        return $post_id;
+    }
 
 }
