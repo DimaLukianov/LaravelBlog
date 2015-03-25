@@ -23,7 +23,8 @@ class PostRequest extends Request {
 	{
 		return [
 			'title' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'tag_list' => 'required'
 		];
 	}
 
